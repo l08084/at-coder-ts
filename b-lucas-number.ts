@@ -1,16 +1,19 @@
 import * as fs from "fs";
 
 const input = fs.readFileSync("/dev/stdin", "utf8");
-const a = +input;
+const N = +input;
 
-console.log(lucasNumber(a));
+const L: BigInt[] = Array(N + 1);
 
-function lucasNumber(n: number): number {
-  if (n === 0) {
-    return 2;
-  } else if (n === 1) {
-    return 1;
-  } else {
-    return lucasNumber(n - 1) + lucasNumber(n - 2);
+if (N === 1) {
+  L[N] = BigInt(1);
+} else {
+  L[0] = BigInt(2);
+  L[1] = BigInt(1);
+
+  for (let i = 2; i <= N; i++) {
+    L[i] = BigInt(L[i - 1]) + BigInt(L[i - 2]);
   }
 }
+
+console.log(String(L[N]));
